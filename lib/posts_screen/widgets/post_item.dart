@@ -12,27 +12,12 @@ class PostItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(
-        8.0,
-      ),
-      padding: const EdgeInsets.all(
-        8.0,
-      ),
+      padding: const EdgeInsets.all(11.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 33, 36, 39),
         borderRadius: BorderRadius.circular(
-          8.0,
+          10.0,
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            offset: Offset(
-              0.0,
-              1.0,
-            ),
-            blurRadius: 6.0,
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,15 +27,23 @@ class PostItem extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
-          const SizedBox(
-            height: 8.0,
+          const SizedBox(height: 5.0),
+          Text(
+            "publié le ${post.formattedPublishDate}",
+            style: const TextStyle(
+              fontSize: 11.0,
+              color: Color.fromARGB(255, 164, 164, 164),
+            ),
           ),
+          const SizedBox(height: 8.0),
           Text(
             post.description,
             style: const TextStyle(
-              fontSize: 14.0,
+              fontSize: 13.0,
+              color: Color.fromARGB(255, 190, 190, 190),
             ),
           ),
         ],

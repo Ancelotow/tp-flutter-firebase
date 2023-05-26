@@ -11,6 +11,7 @@ class PostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<PostBloc>(context).add(GetAllPosts());
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 15, 17, 18),
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
           switch (state.status) {
@@ -33,8 +34,11 @@ class PostScreen extends StatelessWidget {
                 itemCount: state.posts.length,
                 itemBuilder: (context, index) {
                   final post = state.posts[index];
-                  return PostItem(
-                    post: post,
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: PostItem(
+                      post: post,
+                    ),
                   );
                 },
               );
@@ -43,6 +47,7 @@ class PostScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addPost(context),
+        backgroundColor: const Color.fromARGB(255, 43, 46, 49),
         child: const Icon(
           Icons.add,
         ),

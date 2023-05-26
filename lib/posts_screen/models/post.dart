@@ -21,4 +21,8 @@ class Post {
       publishDate: dto.publishDate,
     );
   }
+
+  String get formattedPublishDate {
+    return "${publishDate.day}/${publishDate.month}/${publishDate.year}";
+  }
 }
