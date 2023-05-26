@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.esgi.tp_flutter_firebase">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
    <application
         android:label="tp_flutter_firebase"
         android:name="${applicationName}"
