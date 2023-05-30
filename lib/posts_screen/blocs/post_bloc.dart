@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../models/post.dart';
 import '../repository/post_repository.dart';
 
 part 'post_event.dart';
+
 part 'post_state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
@@ -17,11 +17,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   void _getPosts(PostEvent event, Emitter<PostState> emit) async {
     emit(state.copyWith(status: PostStatus.loading));
-    try {
-      final posts = await _repository.getPosts();
-      emit(state.copyWith(posts: posts, status: PostStatus.success));
-    } catch(e) {
-      emit(state.copyWith(status: PostStatus.failure, errorMessage: e.toString()));
-    }
+    await emit.forEach(_repository.getPostsStream(), onData: (posts) {
+      return state.copyWith(posts: posts, status: PostStatus.success);
+    }).catchError((error) {
+      emit(state.copyWith(
+        errorMessage: error.toString(),
+        status: PostStatus.failure,
+      ));
+    });
   }
 }

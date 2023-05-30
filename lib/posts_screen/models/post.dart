@@ -25,4 +25,8 @@ class Post {
   String get formattedPublishDate {
     return "${publishDate.day}/${publishDate.month}/${publishDate.year}";
   }
+
+  String get formattedPublishTime {
+    return "${publishDate.hour}h${publishDate.minute}";
+  }
 }

@@ -14,7 +14,7 @@ class PostDto {
   });
 
   factory PostDto.fromJson(Map<String, dynamic> json, String id) {
-    print(json['publish_date']);
+    print(json['coucou !!!!!!!!!!']);
     return PostDto(
       id: id,
       title: json['title'],
