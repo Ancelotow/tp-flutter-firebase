@@ -22,6 +22,15 @@ class Post {
     );
   }
 
+  PostDto toPostDto() {
+    return PostDto(
+      id: id,
+      title: title,
+      description: description,
+      publishDate: publishDate,
+    );
+  }
+
   String get formattedPublishDate {
     return "${publishDate.day}/${publishDate.month}/${publishDate.year}";
   }

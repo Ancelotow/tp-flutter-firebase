@@ -13,12 +13,6 @@ class FirestorePostRepository implements PostRepository {
   FirestorePostRepository(this._postDataSource);
 
   @override
-  Future<List<Post>> getPosts() async {
-    final postsDto = await _postDataSource.getPosts();
-    return postsDto.map(Post.fromPostDto).toList();
-  }
-
-  @override
   Stream<List<Post>> getPostsStream() {
     final stream = _postDataSource.getPostsStream().map((postDtoList) {
       return postDtoList.map(Post.fromPostDto).toList();
@@ -38,5 +32,10 @@ class FirestorePostRepository implements PostRepository {
     );
 
     return _postStreamController.stream;
+  }
+
+  @override
+  Future<String> addPost(Post post) {
+    return _postDataSource.addPost(post.toPostDto());
   }
 }

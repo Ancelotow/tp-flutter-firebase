@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tp_flutter_firebase/posts_screen/add_post_screen/add_post_screen.dart';
 import 'package:tp_flutter_firebase/posts_screen/blocs/post_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/data_source/firestore_post_data_source.dart';
 import 'package:tp_flutter_firebase/posts_screen/post_screen.dart';
@@ -29,8 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) =>
-          FirestorePostRepository(FirestorePostDataSource()) as PostRepository,
+      create: (context) => FirestorePostRepository(FirestorePostDataSource()) as PostRepository,
       child: Builder(
         builder: (context) {
           return MultiBlocProvider(
@@ -42,13 +42,26 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-              title: 'Posts',
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              home: const PostScreen(),
-            ),
+                title: 'Posts',
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                home: const PostScreen(),
+                onGenerateRoute: (RouteSettings settings) {
+                  Widget content = const SizedBox.shrink();
+                  final dynamic arguments = settings.arguments;
+                  switch (settings.name) {
+                    case AddPostScreen.routeName:
+                      content = AddPostScreen();
+                      break;
+                  }
+                  return MaterialPageRoute(
+                    builder: (context) {
+                      return content;
+                    },
+                  );
+                }),
           );
         },
       ),
