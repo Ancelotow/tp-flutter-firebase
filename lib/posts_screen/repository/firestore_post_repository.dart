@@ -33,4 +33,9 @@ class FirestorePostRepository implements PostRepository {
 
     return _postStreamController.stream;
   }
+
+  @override
+  Future<String> addPost(Post post) {
+    return _postDataSource.addPost(post.toPostDto());
+  }
 }

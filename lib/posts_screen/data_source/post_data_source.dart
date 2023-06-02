@@ -2,4 +2,6 @@ import '../dto/post_dto.dart';
 
 abstract class PostDataSource {
   Stream<List<PostDto>> getPostsStream();
+
+  Future<String> addPost(PostDto post);
 }

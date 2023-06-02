@@ -31,4 +31,12 @@ class FirestorePostDataSource implements PostDataSource {
 
     return _postStreamController.stream;
   }
+
+  @override
+  Future<String> addPost(PostDto post) async {
+    final ref = await FirebaseFirestore.instance
+        .collection('posts')
+        .add(post.toJson());
+    return ref.id;
+  }
 }

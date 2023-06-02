@@ -14,7 +14,6 @@ class PostDto {
   });
 
   factory PostDto.fromJson(Map<String, dynamic> json, String id) {
-    print(json['coucou !!!!!!!!!!']);
     return PostDto(
       id: id,
       title: json['title'],
@@ -27,7 +26,7 @@ class PostDto {
     return {
       'title': title,
       'description': description,
-      'publish_date': publishDate.toIso8601String(),
+      'publish_date': Timestamp.fromDate(publishDate),
     };
   }
 }
