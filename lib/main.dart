@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/blocs/post_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/data_source/firestore_post_data_source.dart';
+import 'package:tp_flutter_firebase/posts_screen/edit_post_screen/edit_post_screen.dart';
+import 'package:tp_flutter_firebase/posts_screen/models/post.dart';
 import 'package:tp_flutter_firebase/posts_screen/post_screen.dart';
 import 'package:tp_flutter_firebase/posts_screen/repository/firestore_post_repository.dart';
 import 'package:tp_flutter_firebase/posts_screen/repository/post_repository.dart';
@@ -29,8 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) =>
-          FirestorePostRepository(FirestorePostDataSource()) as PostRepository,
+      create: (context) => FirestorePostRepository(FirestorePostDataSource()) as PostRepository,
       child: Builder(
         builder: (context) {
           return MultiBlocProvider(
@@ -42,13 +43,26 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-              title: 'Posts',
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              home: const PostScreen(),
-            ),
+                title: 'Posts',
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                home: const PostScreen(),
+                onGenerateRoute: (RouteSettings settings) {
+                  Widget content = const SizedBox.shrink();
+                  final dynamic arguments = settings.arguments;
+                  switch (settings.name) {
+                    case AddPostScreen.routeName:
+                      content = const AddPostScreen();
+                      break;
+                  }
+                  return MaterialPageRoute(
+                    builder: (context) {
+                      return content;
+                    },
+                  );
+                }),
           );
         },
       ),

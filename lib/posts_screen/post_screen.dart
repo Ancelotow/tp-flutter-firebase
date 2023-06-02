@@ -1,6 +1,7 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tp_flutter_firebase/posts_screen/edit_post_screen/edit_post_screen.dart';
 import 'package:tp_flutter_firebase/posts_screen/widgets/post_item.dart';
 import 'blocs/post_bloc.dart';
 
@@ -56,6 +57,6 @@ class PostScreen extends StatelessWidget {
   }
 
   void _addPost(BuildContext context) {
-    // TODO
+    AddPostScreen.navigateTo(context);
   }
 }
