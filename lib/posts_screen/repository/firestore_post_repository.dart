@@ -38,4 +38,9 @@ class FirestorePostRepository implements PostRepository {
   Future<String> addPost(Post post) {
     return _postDataSource.addPost(post.toPostDto());
   }
+
+  @override
+  Future<void> updatePost(Post post) async {
+    await _postDataSource.updatePost(post.toPostDto());
+  }
 }

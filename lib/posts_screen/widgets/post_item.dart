@@ -35,12 +35,17 @@ class PostItem extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5.0),
-            Text(
-              "publié le ${post.formattedPublishDate} à ${post.formattedPublishTime}",
-              style: const TextStyle(
-                fontSize: 11.0,
-                color: Color.fromARGB(255, 164, 164, 164),
-              ),
+            Row(
+              children: [
+                Text(
+                  "published on ${post.formattedPublishDate} at ${post.formattedPublishTime} ${_getIsUpdatedText()}",
+                  style: const TextStyle(
+                    fontSize: 11.0,
+                    color: Color.fromARGB(255, 164, 164, 164),
+                  ),
+                ),
+                const SizedBox(width: 5.0),
+              ],
             ),
             const SizedBox(height: 8.0),
             Text(
@@ -54,5 +59,13 @@ class PostItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getIsUpdatedText() {
+    if (post.isUpdated) {
+      return "(updated)";
+    } else {
+      return "";
+    }
   }
 }

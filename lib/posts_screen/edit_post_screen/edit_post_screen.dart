@@ -1,22 +1,28 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tp_flutter_firebase/posts_screen/blocs/post_bloc.dart';
-
+import '../blocs/post_bloc.dart';
 import '../models/post.dart';
 import '../widgets/input_text.dart';
 import '../widgets/my_icon_button.dart';
 
-class AddPostScreen extends StatelessWidget {
-  static const routeName = '/add-post-screen';
+class EditPostScreen extends StatelessWidget {
+  static const routeName = '/edit-post-screen';
 
+  final Post post;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  AddPostScreen({Key? key}) : super(key: key);
+  EditPostScreen({
+    super.key,
+    required this.post,
+  }) {
+    _titleController.text = post.title;
+    _descriptionController.text = post.description;
+  }
 
-  static void navigateTo(BuildContext context) {
-    Navigator.of(context).pushNamed(routeName);
+  static void navigateTo(BuildContext context, Post post) {
+    Navigator.of(context).pushNamed(routeName, arguments: post);
   }
 
   @override
@@ -32,7 +38,7 @@ class AddPostScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: MyIconButton(
-                  label: "Create post",
+                  label: "Update post",
                   icon: Icons.arrow_back_ios_rounded,
                   textColor: Colors.white,
                   size: 18,
@@ -62,7 +68,7 @@ class AddPostScreen extends StatelessWidget {
                     case PostStatus.editSuccess:
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Post added successfully"),
+                          content: Text("Post updated successfully"),
                           backgroundColor: Colors.green,
                         ),
                       );
@@ -96,7 +102,7 @@ class AddPostScreen extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.purple),
                           onPressed: () => _save(context),
-                          child: const Text("Send post"),
+                          child: const Text("Edit post"),
                         ),
                       );
                   }
@@ -115,12 +121,12 @@ class AddPostScreen extends StatelessWidget {
 
   void _save(BuildContext context) {
     var bloc = BlocProvider.of<PostBloc>(context);
-    final post = Post(
+    final postUpdate = Post(
       title: _titleController.text,
       description: _descriptionController.text,
-      id: '',
+      id: post.id,
       publishDate: DateTime.now(),
     );
-    bloc.add(AddPost(post: post));
+    bloc.add(UpdatePost(post: postUpdate));
   }
 }

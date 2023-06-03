@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/add_post_screen/add_post_screen.dart';
 import 'package:tp_flutter_firebase/posts_screen/blocs/post_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/data_source/firestore_post_data_source.dart';
+import 'package:tp_flutter_firebase/posts_screen/edit_post_screen/edit_post_screen.dart';
+import 'package:tp_flutter_firebase/posts_screen/models/post.dart';
 import 'package:tp_flutter_firebase/posts_screen/post_screen.dart';
 import 'package:tp_flutter_firebase/posts_screen/repository/firestore_post_repository.dart';
 import 'package:tp_flutter_firebase/posts_screen/repository/post_repository.dart';
@@ -54,6 +56,12 @@ class MyApp extends StatelessWidget {
                   switch (settings.name) {
                     case AddPostScreen.routeName:
                       content = AddPostScreen();
+                      break;
+
+                    case EditPostScreen.routeName:
+                      if(arguments is Post) {
+                        content = EditPostScreen(post: arguments);
+                      }
                       break;
                   }
                   return MaterialPageRoute(
