@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => FirestorePostRepository(FirestorePostDataSource()) as PostRepository,
+      create: (context) =>
+          FirestorePostRepository(FirestorePostDataSource()) as PostRepository,
       child: Builder(
         builder: (context) {
           return MultiBlocProvider(
@@ -44,32 +45,33 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-                title: 'Posts',
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                ),
-                home: const PostScreen(),
-                onGenerateRoute: (RouteSettings settings) {
-                  Widget content = const SizedBox.shrink();
-                  final dynamic arguments = settings.arguments;
-                  switch (settings.name) {
-                    case AddPostScreen.routeName:
-                      content = AddPostScreen();
-                      break;
+              title: 'Posts',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: const PostScreen(),
+              onGenerateRoute: (RouteSettings settings) {
+                Widget content = const SizedBox.shrink();
+                final dynamic arguments = settings.arguments;
+                switch (settings.name) {
+                  case AddPostScreen.routeName:
+                    content = AddPostScreen();
+                    break;
 
-                    case EditPostScreen.routeName:
-                      if(arguments is Post) {
-                        content = EditPostScreen(post: arguments);
-                      }
-                      break;
-                  }
-                  return MaterialPageRoute(
-                    builder: (context) {
-                      return content;
-                    },
-                  );
-                }),
+                  case EditPostScreen.routeName:
+                    if (arguments is Post) {
+                      content = EditPostScreen(post: arguments);
+                    }
+                    break;
+                }
+                return MaterialPageRoute(
+                  builder: (context) {
+                    return content;
+                  },
+                );
+              },
+            ),
           );
         },
       ),
