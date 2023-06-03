@@ -1,5 +1,5 @@
-import 'package:tp_flutter_firebase/posts_screen/dto/post_dto.dart';
 import 'package:intl/intl.dart';
+import 'dto/post_dto.dart';
 
 class Post {
   final String id;

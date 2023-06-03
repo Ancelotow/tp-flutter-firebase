@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/add_post_screen/add_post_screen.dart';
 import 'package:tp_flutter_firebase/posts_screen/edit_post_screen/edit_post_screen.dart';
+import 'package:tp_flutter_firebase/posts_screen/providers/analytics_provider.dart';
 import 'package:tp_flutter_firebase/posts_screen/widgets/post_item.dart';
 import 'blocs/post_bloc.dart';
 import 'models/post.dart';
@@ -24,7 +25,11 @@ class PostScreen extends StatelessWidget {
               );
 
             case PostStatus.failure:
-              //FirebaseCrashlytics.instance.recordError(state.errorMessage, StackTrace.current, fatal: true);
+              AnalyticsProvider.of(context).errorAnalytics.logError(
+                message: state.errorMessage,
+                stackTrace: StackTrace.current,
+                fatal: true,
+              );
               return const Center(
                 child: Text(
                   "Oops.. Something went wrong !",
