@@ -33,6 +33,17 @@ class PostScreen extends StatelessWidget {
 
             case PostStatus.success:
             default:
+              if(state.posts.isEmpty){
+                return const Center(
+                  child: Text(
+                    "No posts found\nPlease add some posts",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                    )
+                  ),
+                );
+              }
               return ListView.builder(
                 itemCount: state.posts.length,
                 itemBuilder: (context, index) {
