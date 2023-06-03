@@ -1,4 +1,4 @@
-import '../dto/post_dto.dart';
+import '../models/dto/post_dto.dart';
 
 abstract class PostDataSource {
   Stream<List<PostDto>> getPostsStream();

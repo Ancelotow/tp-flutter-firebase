@@ -18,14 +18,21 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   void _getPosts(GetAllPosts event, Emitter<PostState> emit) async {
     emit(state.copyWith(status: PostStatus.loading));
-    await emit.forEach(_repository.getPostsStream(), onData: (posts) {
-      return state.copyWith(posts: posts, status: PostStatus.success);
-    }).catchError((error) {
+    try {
+      await emit.forEach(_repository.getPostsStream(), onData: (posts) {
+        return state.copyWith(posts: posts, status: PostStatus.success);
+      }).catchError((error) {
+        emit(state.copyWith(
+          errorMessage: error.toString(),
+          status: PostStatus.failure,
+        ));
+      });
+    } catch(e) {
       emit(state.copyWith(
-        errorMessage: error.toString(),
+        errorMessage: e.toString(),
         status: PostStatus.failure,
       ));
-    });
+    }
   }
 
   void _addPost(AddPost event, Emitter<PostState> emit) async {

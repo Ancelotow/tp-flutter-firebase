@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/post_bloc.dart';
 import '../models/post.dart';
+import '../providers/analytics_provider.dart';
 import '../widgets/input_text.dart';
 import '../widgets/my_icon_button.dart';
 
@@ -76,7 +77,11 @@ class EditPostScreen extends StatelessWidget {
                       break;
 
                     case PostStatus.failure:
-                      FirebaseCrashlytics.instance.recordError(state.errorMessage, StackTrace.current, fatal: true);
+                      AnalyticsProvider.of(context).errorAnalytics.logError(
+                            message: state.errorMessage,
+                            stackTrace: StackTrace.current,
+                            fatal: true,
+                          );
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(state.errorMessage),
