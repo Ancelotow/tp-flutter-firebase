@@ -10,13 +10,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tp_flutter_firebase/posts_screen/blocs/post_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/post_screen.dart';
+import 'package:tp_flutter_firebase/posts_screen/providers/analytics_provider.dart';
 import 'package:tp_flutter_firebase/posts_screen/repository/post_repository.dart';
 import 'package:tp_flutter_firebase/posts_screen/widgets/post_item.dart';
-
-import 'mock/empty_post_repository.dart';
-import 'mock/error_post_repository.dart';
-import 'mock/loading_post_repository.dart';
-import 'mock/success_post_repository.dart';
+import 'mock/analytics/mock_error_analytics.dart';
+import 'mock/repository/empty_post_repository.dart';
+import 'mock/repository/error_post_repository.dart';
+import 'mock/repository/loading_post_repository.dart';
+import 'mock/repository/success_post_repository.dart';
 
 
 
@@ -84,8 +85,11 @@ void main() {
           create: (context) => PostBloc(
             RepositoryProvider.of<PostRepository>(context),
           ),
-          child: const MaterialApp(
-            home: PostScreen(),
+          child: AnalyticsProvider(
+            errorAnalytics: MockErrorAnalytics(),
+            child: const MaterialApp(
+              home: PostScreen(),
+            ),
           ),
         ),
       ),
