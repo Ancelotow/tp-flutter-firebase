@@ -24,10 +24,10 @@ class PostScreen extends StatelessWidget {
               );
 
             case PostStatus.failure:
-              FirebaseCrashlytics.instance.recordError(state.errorMessage, StackTrace.current, fatal: true);
+              //FirebaseCrashlytics.instance.recordError(state.errorMessage, StackTrace.current, fatal: true);
               return const Center(
                 child: Text(
-                  "Oops.. Something went wrong!",
+                  "Oops.. Something went wrong !",
                 ),
               );
 
