@@ -15,3 +15,11 @@ class AddPost extends PostEvent {
     required this.post,
   });
 }
+
+class UpdatePost extends PostEvent {
+  final Post post;
+
+  UpdatePost({
+    required this.post,
+  });
+}

@@ -13,6 +13,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc(this._repository) : super(const PostState()) {
     on<GetAllPosts>(_getPosts);
     on<AddPost>(_addPost);
+    on<UpdatePost>(_updatePost);
   }
 
   void _getPosts(GetAllPosts event, Emitter<PostState> emit) async {
@@ -31,6 +32,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     emit(state.copyWith(status: PostStatus.loading));
     try{
       final id = await _repository.addPost(event.post);
+      emit(state.copyWith(status: PostStatus.editSuccess));
+    } catch(e) {
+      emit(state.copyWith(
+        errorMessage: e.toString(),
+        status: PostStatus.failure,
+      ));
+    }
+  }
+
+  void _updatePost(UpdatePost event, Emitter<PostState> emit) async {
+    emit(state.copyWith(status: PostStatus.loading));
+    try{
+      await _repository.updatePost(event.post.copyWith(isUpdated: true));
       emit(state.copyWith(status: PostStatus.editSuccess));
     } catch(e) {
       emit(state.copyWith(

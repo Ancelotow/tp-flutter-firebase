@@ -2,8 +2,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tp_flutter_firebase/posts_screen/add_post_screen/add_post_screen.dart';
+import 'package:tp_flutter_firebase/posts_screen/edit_post_screen/edit_post_screen.dart';
 import 'package:tp_flutter_firebase/posts_screen/widgets/post_item.dart';
 import 'blocs/post_bloc.dart';
+import 'models/post.dart';
 
 class PostScreen extends StatelessWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -39,6 +41,7 @@ class PostScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: PostItem(
                       post: post,
+                      onTap: () => _editPost(context, post),
                     ),
                   );
                 },
@@ -58,5 +61,9 @@ class PostScreen extends StatelessWidget {
 
   void _addPost(BuildContext context) {
     AddPostScreen.navigateTo(context);
+  }
+
+  void _editPost(BuildContext context, Post post) {
+    EditPostScreen.navigateTo(context, post);
   }
 }
