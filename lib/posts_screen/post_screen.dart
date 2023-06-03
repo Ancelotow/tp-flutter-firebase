@@ -16,7 +16,16 @@ class PostScreen extends StatelessWidget {
     BlocProvider.of<PostBloc>(context).add(GetAllPosts());
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 15, 17, 18),
-      body: BlocBuilder<PostBloc, PostState>(
+      body: BlocConsumer<PostBloc, PostState>(
+        listener: (context, state) {
+          if (state.status == PostStatus.failure) {
+            AnalyticsProvider.of(context).errorAnalytics.logError(
+              message: state.errorMessage,
+              stackTrace: StackTrace.current,
+              fatal: true,
+            );
+          }
+        },
         builder: (context, state) {
           switch (state.status) {
             case PostStatus.loading:
@@ -25,11 +34,6 @@ class PostScreen extends StatelessWidget {
               );
 
             case PostStatus.failure:
-              AnalyticsProvider.of(context).errorAnalytics.logError(
-                message: state.errorMessage,
-                stackTrace: StackTrace.current,
-                fatal: true,
-              );
               return const Center(
                 child: Text(
                   "Oops.. Something went wrong !",
